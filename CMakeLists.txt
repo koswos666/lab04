@@ -10,7 +10,11 @@ add_library(formatter_lib STATIC formatter_lib/formatter.cpp)
 target_include_directories(formatter_lib PUBLIC formatter_lib)
 
 add_library(formatter_ex_lib STATIC formatter_ex_lib/formatter_ex.cpp)
-target_include_directories(formatter_ex_lib PUBLIC formatter_ex_lib)
+target_include_directories(formatter_ex_lib PUBLIC 
+    formatter_ex_lib
+    ${CMAKE_SOURCE_DIR}/formatter_lib
+)
+target_link_libraries(formatter_ex_lib PRIVATE formatter_lib)
 
 add_library(solver_lib STATIC solver_lib/solver.cpp)
 target_include_directories(solver_lib PUBLIC solver_lib)
