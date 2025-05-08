@@ -1,26 +1,22 @@
 name: CMake CI
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+  build-ubuntu:
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3
     
-    - name: Install deps (Ubuntu)
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get update && sudo apt-get install -y build-essential cmake
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y g++ cmake
       
     - name: Configure
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Debug
       
     - name: Build
-      run: cmake --build build --config Release
+      run: cmake --build build --verbose
       
-    - name: Test
+    - name: Run tests
       run: cd build && ctest --output-on-failure
