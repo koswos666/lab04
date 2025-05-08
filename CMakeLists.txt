@@ -23,5 +23,9 @@ target_include_directories(solver_lib PUBLIC solver_lib)
 add_executable(hello_world_app hello_world_application/hello_world.cpp)
 target_link_libraries(hello_world_app formatter_lib formatter_ex_lib)
 
-add_executable(solver_app solver_application/equation.cpp)
-target_link_libraries(solver_app solver_lib formatter_lib)
+add_executable(solver_app PRIVATE
+    ${CMAKE_SOURCE_DIR}/formatter_ex_lib
+    ${CMAKE_SOURCE_DIR}/formatter_lib
+    ${CMAKE_SOURCE_DIR}/solver_lib
+)
+target_link_libraries(solver_app solver_lib formatter_lib formatter_ex_lib)
